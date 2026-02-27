@@ -1,5 +1,10 @@
 I_C = int(input("Digite a idade do seu carro"))
 
+carro1= "carro1"
+carro2= "carro2"
+carro3= "carro3"
+
+
 ListaCarros = [carro1, carro2, carro3]
 
 if I_C > 0:
