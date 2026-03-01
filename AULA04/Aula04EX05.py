@@ -9,4 +9,4 @@ elif Cod == 5 or Cod == 6:
 elif Cod >= 8 and Cod <= 15:
     print("Limpeza e utensílios domésticos")
 else:
-    print("inválido")
+    print("inválido") 
