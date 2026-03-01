@@ -3,7 +3,7 @@ import math
 r = float(input("Digite o raio em metros"))
 a = float(input("Digite a altura em metros"))
 
-area = 2*(3.14 * r**2) + (2 * 3.14 * r * a)
+area = 2*(3.14* r**2) + (2 * 3.14 * r * a)
 
 nLata = math.ceil(area/15)
 
