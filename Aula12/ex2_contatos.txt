@@ -1,0 +1,4 @@
+Nome: h | Telefone: 2
+Nome: & "C:/Users/Henrique Teixeira/AppData/Local/Programs/Python/Python314/python.exe" "c:/Users/Henrique Teixeira/Fund.algoritmos-pyton/Aula12/ex2.py" | Telefone: ronaldo
+Nome: ronaldo | Telefone: 67
+Nome: n | Telefone: 2
