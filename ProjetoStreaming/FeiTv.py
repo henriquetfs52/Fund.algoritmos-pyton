@@ -30,7 +30,7 @@ def menu():
                 for linha in Banco_de_dados:
         
                     if linha.split() == Login:
-                        print("Você fez login corretamente\n")
+                        print(f"{Login[0]} Você fez login corretamente!\n")
                         print("0 - Abrir o aplicativo")
                         print("1 - Sair")
                         Escolha = int(input("Digite sua resposta "))
@@ -97,12 +97,13 @@ def addCadtxt():
 
 # Função com as funções do aplicativo pós menu inicial
 def app():
-   
+        global Filme
         print("FEITV\n")
         print("Aplicativo ligado")
         print("0 - Buscar um Filme")
         print("1 - Gerenciar favoritos")
-        print("2 - Deslogar da sua conta")
+        print("2 - Abrir o catalogo")
+        print("3 - Deslogar da sua conta")
         escolha = int(input("Digite sua resposta: "))
 
         if escolha ==0:
@@ -110,16 +111,58 @@ def app():
             buscar_filmes()
 
         elif escolha ==1:
-            print
+            gerenciar_fav = True
+            print("\n Você acessou o gerenciamento de favoritos")
+            while gerenciar_fav:
+                print("\n 0 - Sair de gerenciamento de favoritos")
+                print("1 - Ver lista de favoritos")
+                print("2 - Adicionar favoritos")
+                print("3 - Remover favoritos")
+                fav_escolha = int(input("Digite sua resposta: "))
+
+                if fav_escolha == 0:
+                     app()
+                
+                if fav_escolha == 1:
+                    print("\n Sua lista de favoritos é:")
+                    Favoritos = open("ProjetoStreaming/Favoritos.txt", "r+")
+                    for linha in Favoritos:
+                        n = 0
+                        Lista_Favoritos = linha.split("-")
+                        if Lista_Favoritos[0] == Login[0]:
+                             n +=0
+                             print(f"\n Filme {n}: {Lista_Favoritos[1]}")
+                
+                if fav_escolha == 2:
+                    print("\n Digite o nome do filme que deseja adicionar aos favoritos")
+                    Filme = input("Filme: ")
+                    favoritar()
+                     
+                # if fav_escolha == 3:
+                
+        
         elif escolha ==2:
+             print("\n Este são os filmes disponiveis no catalogo da FeiTv")
+             Catalogo = open("ProjetoStreaming/Catalogo.txt", "r", encoding="utf-8")
+             for linha in Catalogo:
+                  Infos = linha.split("-")
+                  print(Infos[0])
+
+        elif escolha ==3:
+            Login.pop()
+            Login.pop()
+            Login.pop()
             menu()
+
         else:
             print("Escolha não valida, tente novamente")
 
 
 def buscar_filmes():
-    
+
+        global Filme
         modo_filme = False
+       
 
         Catalogo = open("ProjetoStreaming/Catalogo.txt", "r")
                 
@@ -132,9 +175,9 @@ def buscar_filmes():
             if Infos[0] == Filme:
                 modo_filme=True
                 break
-            else:
-                print("\nO filme não encontra-se em catalalogo, ou teve seu nome digitado incorretamente")
-                buscar_filmes()
+        else:
+            print("\nO filme não encontra-se em catalogo, ou teve seu nome digitado incorretamente")
+            buscar_filmes()
         
         if modo_filme == True:    
                 print("\nO filme encontra-se em catalalogo")
@@ -144,26 +187,37 @@ def buscar_filmes():
 
                 if escolha ==0:
                     print(f"\n{Infos[0]} \n{Infos[1]} \n{Infos[2]} \n{Infos[3]}")
+                    modo_filme == False
                     
-                    Favoritos = open("ProjetoStreaming/Favoritos.txt", "r+")
                     
                     print(f"\n Deseja adicionar {Filme} aos seus favoritos")
 
-                    print("0 - Ver informações sobre o filme")
-                    print("1 - Apenas adiciona-lo aos favoritos")
-                    escolha = int(input("Digite sua resposta: "))
+                    print("0 - Para adicionar")
+                    print("1 - Para não adicionar")
+                    add_fav = int(input("Digite sua resposta: "))
                     
-                    for linha in Favoritos:
-                        Lista_Favoritos = linha.split()
-                        if Lista_Favoritos[0] == Filme:
-                            Fav = "Repetido"
-                    if Fav != "Repetido":
-                        Favoritos.write(f"{Filme}\n")
+                    if add_fav ==0: 
+                        favoritar()
+                    
+                    if add_fav ==1:
+                        Filme = " "
+                        app()
+
+                        
 
 
                 
     
-
+def favoritar():
+     Favoritos = open("ProjetoStreaming/Favoritos.txt", "r+")
+     for linha in Favoritos:
+                        Lista_Favoritos = linha.split("-")
+                        if Lista_Favoritos[1] == Filme and Login[0] == Lista_Favoritos[0]:
+                                Fav = "Repetido"
+                                print("Esse filme já faz parte de seus favoritos")
+                        if Fav != "Repetido":
+                            Favoritos.write(f"{Login[0]}-{Filme}\n")
+                            Filme = " "
 
 menu()
 
