@@ -29,7 +29,7 @@ def menu():
             
                 askLog()
                 appendLog()
-                Banco_de_dados = open("ProjetoStreaming/Login.txt","r")
+                Banco_de_dados = open("Login.txt","r", encoding="utf-8")
                 for linha in Banco_de_dados:
         
                     if linha.split() == Login:
@@ -93,7 +93,7 @@ def askLog():
 
 # Função que adiciona as inforçõees da lista Cad ao arquivo txt Login.txt
 def addCadtxt():
-    arquivo_login = open("ProjetoStreaming/Login.txt","a", encoding="utf-8")
+    arquivo_login = open("Login.txt","a", encoding="utf-8")
     arquivo_login.write(f"{Cad[0]} {Cad[1]} {Cad[2]}\n")
     Cad.pop()
     Cad.pop()
@@ -131,9 +131,9 @@ def app():
                 if fav_escolha == 1:
                     n = 0
                     print("\n Sua lista de favoritos é:")
-                    Favoritos = open("ProjetoStreaming/Favoritos.txt", "r+", encoding="utf-8")
+                    Favoritos = open("Favoritos.txt", "r+", encoding="utf-8")
                     for linha in Favoritos:
-                        n = 0
+
                         Lista_Favoritos = linha.split("-")
                         if Lista_Favoritos[0] == Login[0]:
                              n +=1
@@ -152,7 +152,7 @@ def app():
         
         elif escolha ==2:
              print("\n Este são os filmes disponiveis no catalogo da FeiTv")
-             Catalogo = open("ProjetoStreaming/Catalogo.txt", "r", encoding="utf-8")
+             Catalogo = open("Catalogo.txt", "r", encoding="utf-8")
              for linha in Catalogo:
                   Infos = linha.split("-")
                   print(f"\n {Infos[0]}")
@@ -175,7 +175,7 @@ def buscar_filmes():
         modo_filme = False
        
 
-        Catalogo = open("ProjetoStreaming/Catalogo.txt", "r", encoding="utf-8")
+        Catalogo = open("Catalogo.txt", "r", encoding="utf-8")
                 
         print("\nA busca deve ser feita por nome, digite o nome do filme no espaço a seguir")
         Filme  = input("Filme: ")
@@ -209,14 +209,15 @@ def buscar_filmes():
                     
                     if add_fav ==0: 
                         favoritar()
-                        print(f"{Filme} foi adicionado aos seus favoritos")
                     
                     if add_fav ==1:
                         Filme = " "
                         app()
-                if escolha ==1:
+
+                if escolha == 1:
                      favoritar()
-                     print(f"{Filme} foi adicionado aos seus favoritos")
+                    
+
                         
 
 
@@ -224,7 +225,7 @@ def buscar_filmes():
     
 def favoritar():
      global Filme
-     Favoritos = open("ProjetoStreaming/Favoritos.txt", "r+", encoding="utf-8")
+     Favoritos = open("Favoritos.txt", "r+", encoding="utf-8")
      Fav =  " "
      for linha in Favoritos:
         Lista_Favoritos = linha.strip().split("-")
@@ -240,7 +241,7 @@ def remover_favorito():
 
     global Filme
 
-    Favoritos = open("ProjetoStreaming/Favoritos.txt", "r", encoding="utf-8")
+    Favoritos = open("Favoritos.txt", "r", encoding="utf-8")
 
     linhas = []
 
@@ -260,7 +261,7 @@ def remover_favorito():
 
     Filme = input("\nDigite o nome do filme que deseja remover: ")
 
-    Novo_Favoritos = open("ProjetoStreaming/Favoritos.txt", "w", encoding="utf-8")
+    Novo_Favoritos = open("Favoritos.txt", "w", encoding="utf-8")
 
     for linha in linhas:
 
