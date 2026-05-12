@@ -1,8 +1,10 @@
 ab-Hora do Mal
-ab-Hocus Pocus
 silvia-Hocus Pocus
 fabio-Pixels
 v2-Hora do Mal
 usuario-Pixels
 a-Pânico
 a-Vingadores: Guerra Infinita
+ab-Pânico
+a-Pixels
+ab-De Volta Para O Futuro
