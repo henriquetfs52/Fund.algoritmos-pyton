@@ -32,6 +32,7 @@ def menu():
 
             Banco_de_dados = open("Login.txt", "r", encoding="utf-8")
 
+            # Verifica se os dados digitados existem no banco de dados
             for linha in Banco_de_dados:
 
                 if linha.split() == Login:
@@ -102,6 +103,7 @@ def app():
             if fav_escolha == 0:
                 app()
 
+            # Visualização dos favoritos do usuário
             if fav_escolha == 1:
 
                 n = 0
@@ -120,6 +122,48 @@ def app():
 
                         print(f"\n Filme {n}: {Lista_Favoritos[1]}")
 
+                # Reprodução dos favoritos
+                print(f"\n Deseja reproduzir sua lista de favoritos?")
+
+                print("0 - Reproduzir favoritos")
+
+                print("1 - Não reproduzir")
+                fav_reprod = int(input("Digite sua resposta: "))
+
+                if fav_reprod == 0:
+
+                    Favoritos = open("Favoritos.txt", "r", encoding="utf-8")
+                    Catalogo = open("Catalogo.txt", "r", encoding="utf-8")
+
+                    favoritos_usuario = []
+
+                    # Salva os favoritos do usuário
+                    for linha in Favoritos:
+
+                        Lista_Favoritos = linha.strip().split("-")
+
+                        if Lista_Favoritos[0] == Login[0]:
+
+                            favoritos_usuario.append(Lista_Favoritos[1].strip().lower())
+
+                    # Percorre o catálogo e reproduz os favoritos
+                    for linha in Catalogo:
+
+                        Lista_Catalogo = linha.strip().split("-")
+
+                        nome_filme = Lista_Catalogo[0].strip().lower()
+
+                        if nome_filme in favoritos_usuario:
+
+                            print(f"\n{Lista_Catalogo[0]}")
+                            print(f"{Lista_Catalogo[1]}")
+                            print(f"{Lista_Catalogo[2]}")
+                            print(f"{Lista_Catalogo[3]}")
+
+                if fav_reprod == 1:
+                    app()
+
+            # Adiciona um filme aos favoritos
             if fav_escolha == 2:
 
                 print("\n Digite o nome do filme que deseja adicionar aos favoritos")
@@ -130,6 +174,7 @@ def app():
 
                 app()
 
+            # Remove um filme dos favoritos
             if fav_escolha == 3:
 
                 remover_favorito()
@@ -143,6 +188,7 @@ def app():
 
         Catalogo = open("Catalogo.txt", "r", encoding="utf-8")
 
+        # Exibe todos os filmes disponíveis
         for linha in Catalogo:
 
             Infos = linha.split("-")
@@ -160,6 +206,7 @@ def app():
 
         print("\nEsses são os filmes curtidos por você")
 
+        # Mostra apenas os filmes curtidos do usuário logado
         for linha in Curtidos:
 
             Lista_Curtidos = linha.split("-")
@@ -173,6 +220,7 @@ def app():
     # Deslogar da conta
     elif escolha == 4:
 
+        # Remove os dados do usuário atual da lista Login
         Login.pop()
         Login.pop()
         Login.pop()
@@ -232,6 +280,7 @@ def addCadtxt():
 
     arquivo_login.write(f"{Cad[0]} {Cad[1]} {Cad[2]}\n")
 
+    # Limpa a lista Cad após salvar os dados
     Cad.pop()
     Cad.pop()
     Cad.pop()
@@ -250,6 +299,7 @@ def buscar_filmes():
 
     Filme = input("Filme: ").strip().lower()
 
+    # Procura o filme digitado dentro do catálogo
     for linha in Catalogo:
 
         Infos = linha.split("-")
@@ -283,6 +333,7 @@ def buscar_filmes():
 
             like = False
 
+            # Verifica se o filme já foi curtido
             for linha in Curtidos:
 
                 Lista_Curtidos = linha.strip().split("-")
@@ -344,6 +395,7 @@ def favoritar():
 
     Fav = " "
 
+    # Verifica se o filme já existe nos favoritos
     for linha in Favoritos:
 
         Lista_Favoritos = linha.strip().split("-")
@@ -372,6 +424,7 @@ def curtir():
 
     Fav = " "
 
+    # Verifica se o filme já foi curtido anteriormente
     for linha in Curtidos:
 
         Lista_Curtidos = linha.strip().split("-")
@@ -400,12 +453,14 @@ def remover_favorito():
 
     print("\nSeus favoritos:\n")
     n = 0
+
+    # Exibe os favoritos atuais do usuário
     for linha in Favoritos:
 
         Lista_Favoritos = linha.strip().split("-")
 
         if Lista_Favoritos[0] == Login[0]:
-            n+=1
+            n += 1
             print(f"\nFilme {n}{Lista_Favoritos[1]}")
 
         linhas.append(linha)
@@ -416,6 +471,7 @@ def remover_favorito():
 
     Novo_Favoritos = open("Favoritos.txt", "w", encoding="utf-8")
 
+    # Reescreve o arquivo sem o filme removido
     for linha in linhas:
 
         Lista_Favoritos = linha.strip().split("-")
@@ -432,6 +488,7 @@ def remover_favorito():
 
     Filme = ' '
 
+
 # Função chamada pelo app na hora de remover um filme dos curtidos
 def remover_curtida():
 
@@ -441,6 +498,7 @@ def remover_curtida():
 
     linhas = []
 
+    # Salva todas as linhas do arquivo temporariamente
     for linha in Curtidos:
 
         linhas.append(linha)
@@ -456,7 +514,7 @@ def remover_curtida():
         usuario = Lista_Curtidos[0]
         filme_salvo = Lista_Curtidos[1].strip().lower()
 
-        # reescreve tudo menos o filme removido
+        # Reescreve tudo menos o filme removido
         if not (usuario == Login[0] and filme_salvo == Filme):
 
             Novo_Curtidos.write(linha)
