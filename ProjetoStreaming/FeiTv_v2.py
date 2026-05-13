@@ -11,6 +11,8 @@ def menu():
         global Inicio
 
         print("\n FEITV")
+        print("O melhor streaming do terminal do seu computdor!")
+        print("Siga as instruções para usar-lo")
         print("0 - Cadastrar")
         print("1 - Logar")
         print("2 - Sair")
@@ -22,7 +24,7 @@ def menu():
             askCad()
             appendCad()
             addCadtxt()
-            print('\n Você foi cadastrado com sucesso, agora, faça o Login para entrar no app')
+            print(f'\nVocê foi cadastrado com sucesso, agora, faça o Login para entrar no app')
 
         # Escolha login
         elif Inicio == 1:
@@ -216,6 +218,7 @@ def app():
                 n += 1
 
                 print(f"\nFilme {n}: {Lista_Curtidos[1]}")
+        app()
 
     # Deslogar da conta
     elif escolha == 4:
@@ -400,6 +403,10 @@ def favoritar():
 
         Lista_Favoritos = linha.strip().split("-")
 
+        # Ignora linhas vazias ou inválidas
+        if len(Lista_Favoritos) < 2:
+            continue
+
         if Lista_Favoritos[1].strip().lower() == Filme and Login[0] == Lista_Favoritos[0]:
 
             Fav = "Repetido"
@@ -422,24 +429,29 @@ def curtir():
 
     Curtidos = open("Curtidos.txt", "r+", encoding="utf-8")
 
-    Fav = " "
+    like = " "
 
     # Verifica se o filme já foi curtido anteriormente
     for linha in Curtidos:
 
         Lista_Curtidos = linha.strip().split("-")
 
+        # Ignora linhas vazias ou inválidas
+        if len(Lista_Curtidos) < 2:
+            continue
+
+
         if Lista_Curtidos[1].strip().lower() == Filme and Login[0] == Lista_Curtidos[0]:
 
-            Fav = "Repetido"
+            like = "Repetido"
 
-            print("Esse filme já faz parte de seus favoritos")
+            print("Esse filme já faz parte de seus curtidos")
 
-    if Fav != "Repetido":
+    if like != "Repetido":
 
         Curtidos.write(f"{Login[0]}-{Filme.title()}\n")
 
-        print(f"\n{Filme.title()} foi adicionado aos seus favoritos")
+        print(f"\n{Filme.title()} foi adicionado aos seus curtidos")
 
 
 # Função chamada pelo app na hora de remover um filme dos favoritos
@@ -482,8 +494,6 @@ def remover_favorito():
 
     Novo_Favoritos.close()
 
-    Filme = ' '
-
     print(f"{Filme} removido dos favoritos")
 
     Filme = ' '
@@ -511,17 +521,23 @@ def remover_curtida():
 
         Lista_Curtidos = linha.strip().split("-")
 
-        usuario = Lista_Curtidos[0]
+        # Ignora linhas inválidas
+        if len(Lista_Curtidos) < 2:
+            continue
+
+        usuario = Lista_Curtidos[0].strip()
         filme_salvo = Lista_Curtidos[1].strip().lower()
 
-        # Reescreve tudo menos o filme removido
-        if not (usuario == Login[0] and filme_salvo == Filme):
+        # Remove apenas o filme curtido atual
+        if usuario == Login[0] and filme_salvo == Filme.lower():
 
-            Novo_Curtidos.write(linha)
+            continue
+
+        Novo_Curtidos.write(linha)
 
     Novo_Curtidos.close()
 
-    print(f"{Filme} removido dos curtidos")
+    print(f"{Filme.title()} removido dos curtidos")
 
 
 # Chamada original da função menu ao inicio do terminal
