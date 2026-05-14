@@ -323,7 +323,7 @@ def buscar_filmes():
 
     if modo_filme == True:
 
-        print("\nO filme encontra-se em catalalogo")
+        print("\nO filme encontra-se em catalogo")
 
         print("0 - Ver informações sobre o filme")
         print("1 - Apenas adiciona-lo aos favoritos")
